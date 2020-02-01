@@ -30,6 +30,18 @@ class Game extends Model
     }
 
     /**
+     * Checks if the current game has the given cell.
+     *
+     * @param Cell $cell
+     *
+     * @return bool
+     */
+    public function contains(Cell $cell): bool
+    {
+        return $this->cells->pluck('id')->contains($cell->id);
+    }
+
+    /**
      * Reset all the cells in the Game to their
      * initial value.
      *
