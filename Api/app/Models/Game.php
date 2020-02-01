@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Game extends Model
 {
@@ -16,6 +17,39 @@ class Game extends Model
     protected $dates = [
         'completed_at',
     ];
+
+    /**
+     * New up cells for the game.
+     *
+     * @param Collection $cells
+     *
+     * @return Game
+     */
+    public function newUpCells(Collection $cells): Game
+    {
+        return tap($this, function (Game $game) use ($cells) {
+            $game->cells()->createMany($cells->transform(function (string $cell) {
+                return ['location' => $cell];
+            }));
+        });
+    }
+
+    /**
+     * Set the cell location to the given value in the current game.
+     *
+     * @param string $value
+     * @param string $location
+     *
+     * @return Game
+     */
+    public function play(string $value, string $location): Game
+    {
+        $this->cells()->where('location', $location)->update([
+            'value' => $value,
+        ]);
+
+        return $this;
+    }
 
     /**
      * Mark the game as un completed.

@@ -45,10 +45,7 @@ class GenerateNewGame
      */
     public function execute(int $grid = 3): Game
     {
-        return tap($this->games->create(), function (Game $game) use ($grid) {
-            $game->cells()->createMany($this->generateGridCells->execute($grid)->transform(function (string $cell) {
-                return ['location' => $cell];
-            }));
-        });
+        return $this->games->create()
+                           ->newUpCells($this->generateGridCells->execute($grid));
     }
 }
