@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\CellValue;
 use App\Models\Cell;
 use App\Models\Game;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,6 +53,34 @@ class GameTest extends TestCase
         $this->assertDatabaseHas('cells', [
             'game_id' => $game->id,
             'value'   => null,
+        ]);
+    }
+
+    /**
+     * Test that we are able to save the next move of the player.
+     *
+     * @return void
+     */
+    public function test_play_saves_next_move()
+    {
+        $this->withoutExceptionHandling();
+        $game = factory(Game::class)->create();
+        $cell = factory(Cell::class)->create([
+            'game_id' => $game->id,
+            'value'   => null,
+        ]);
+
+        $response = $this->putJson(
+            route('api.games.cells.update', ['game' => $game, 'cell' => $cell]),
+            ['value' => CellValue::X]
+        );
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('cells', [
+            'id'       => $cell->id,
+            'location' => $cell->location,
+            'value'    => CellValue::X,
         ]);
     }
 }
