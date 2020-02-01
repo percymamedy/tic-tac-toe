@@ -11,10 +11,11 @@ interface Player
      *
      * @param Game   $game
      * @param string $piece
+     * @param string $opponentPiece
      *
      * @return string
      *
      * @throws \RuntimeException
      */
-    public function nextMoveIn(Game $game, string $piece): string;
+    public function nextMoveIn(Game $game, string $piece, string $opponentPiece): string;
 }
