@@ -11,8 +11,9 @@ interface Strategy
      *
      * @param Collection $cells
      * @param string     $peice
+     * @param string     $opponentPiece
      *
      * @return null|string
      */
-    public function findMove(Collection $cells, string $peice): ?string;
+    public function findMove(Collection $cells, string $peice, string $opponentPiece): ?string;
 }

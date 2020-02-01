@@ -13,7 +13,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Robot\Contracts\Player::class, \App\Robot\Players\TicTacToeClassicPlayer::class);
+        // Bind the Player contract.
+        $this->app->bind(\App\Robot\Contracts\Player::class, function (\Illuminate\Foundation\Application $app) {
+            $strategies = collect([
+                $app->make(\App\Robot\Players\Strategies\WinningStrategy::class),
+                $app->make(\App\Robot\Players\Strategies\BlockStrategy::class),
+            ]);
+
+            return new \App\Robot\Players\TicTacToeClassicPlayer($strategies);
+        });
     }
 
     /**

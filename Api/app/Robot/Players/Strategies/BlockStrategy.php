@@ -4,7 +4,7 @@ namespace App\Robot\Players\Strategies;
 
 use Illuminate\Support\Collection;
 
-class WinningStrategy extends BaseStrategy
+class BlockStrategy extends BaseStrategy
 {
     /**
      * Find the move within the given cells.
@@ -24,7 +24,7 @@ class WinningStrategy extends BaseStrategy
                 continue;
             }
 
-            if ($this->cellsAreFilledWithPeice($combinationCells, $peice)) {
+            if ($this->cellsAreFilledWithPeice($combinationCells, $opponentPiece)) {
                 return $this->findMissingPiece($combinationCells)->location;
             }
         }
