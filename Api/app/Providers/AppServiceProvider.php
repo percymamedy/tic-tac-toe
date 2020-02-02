@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
             $strategies = collect([
                 $app->make(\App\Robot\Players\Strategies\WinningStrategy::class),
                 $app->make(\App\Robot\Players\Strategies\BlockStrategy::class),
+                $app->make(\App\Robot\Players\Strategies\EmptyCornerStrategy::class),
+                $app->make(\App\Robot\Players\Strategies\EmptySideStrategy::class)
             ]);
 
             return new \App\Robot\Players\TicTacToeClassicPlayer($strategies);

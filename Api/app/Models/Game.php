@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Concerns\Gameable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 class Game extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Gameable;
 
     /**
      * The attributes that should be mutated to dates.
@@ -17,6 +18,26 @@ class Game extends Model
     protected $dates = [
         'completed_at',
     ];
+
+    /**
+     * Check if game has been won by the given piece.
+     *
+     * @param string $piece
+     *
+     * @return bool
+     */
+    public function wonBy(string $piece): bool
+    {
+        foreach ($this->calculateWinningCombinations() as $combination) {
+            $cells = $this->combinationCells($this->cells()->get(), $combination);
+
+            if ($this->cellsAreFilledWithPeice($cells, $piece, 3)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * New up cells for the game.
@@ -47,6 +68,18 @@ class Game extends Model
         $this->cells()->where('location', $location)->update([
             'value' => $value,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * Mark the game as completed.
+     *
+     * @return Game
+     */
+    public function markAsCompleted(): Game
+    {
+        $this->completed_at = now();
 
         return $this;
     }

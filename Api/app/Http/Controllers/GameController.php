@@ -20,7 +20,19 @@ class GameController extends Controller
      */
     public function store(CreateNewGameRequest $request, GenerateNewGame $generateNewGame)
     {
-        return GameResource::make($generateNewGame->execute($request->input('grid')));
+        return $this->renderGame($generateNewGame->execute($request->input('grid')));
+    }
+
+    /**
+     * Show a game.
+     *
+     * @param Game $game
+     *
+     * @return GameResource
+     */
+    public function show(Game $game)
+    {
+        return $this->renderGame($game);
     }
 
     /**
@@ -32,6 +44,18 @@ class GameController extends Controller
      */
     public function reset(Game $game, ResetGame $resetGame)
     {
-        return GameResource::make($resetGame->execute($game));
+        return $this->renderGame($resetGame->execute($game));
+    }
+
+    /**
+     * Render a game using game resource.
+     *
+     * @param Game $game
+     *
+     * @return GameResource
+     */
+    protected function renderGame(Game $game): GameResource
+    {
+        return GameResource::make($game);
     }
 }

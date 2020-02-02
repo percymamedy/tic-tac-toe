@@ -41,6 +41,20 @@ class Cell extends Model
     }
 
     /**
+     * Play the cell with the piece.
+     *
+     * @param string $piece
+     *
+     * @return Cell
+     */
+    public function play(string $piece): Cell
+    {
+        return tap($this->updateValue($piece), function (Cell $cell) {
+            $cell->save();
+        });
+    }
+
+    /**
      * Update the value of the cell.
      *
      * @param mixed $value

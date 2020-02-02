@@ -63,16 +63,22 @@ class GameTest extends TestCase
      */
     public function test_play_saves_next_move()
     {
-        $this->withoutExceptionHandling();
         $game = factory(Game::class)->create();
         $cell = factory(Cell::class)->create([
-            'game_id' => $game->id,
-            'value'   => null,
+            'game_id'  => $game->id,
+            'value'    => null,
+            'location' => 'A1',
+        ]);
+
+        factory(Cell::class)->create([
+            'game_id'  => $game->id,
+            'value'    => null,
+            'location' => 'A2',
         ]);
 
         $response = $this->putJson(
             route('api.games.cells.update', ['game' => $game, 'cell' => $cell]),
-            ['value' => CellValue::X]
+            ['value' => CellValue::O, 'opponent' => CellValue::X]
         );
 
         $response->assertSuccessful();
@@ -80,7 +86,7 @@ class GameTest extends TestCase
         $this->assertDatabaseHas('cells', [
             'id'       => $cell->id,
             'location' => $cell->location,
-            'value'    => CellValue::X,
+            'value'    => CellValue::O,
         ]);
     }
 }
