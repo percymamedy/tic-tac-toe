@@ -1,3 +1,4 @@
 export default {
-    game: null
+    game: null,
+    turn: 'player'
 }

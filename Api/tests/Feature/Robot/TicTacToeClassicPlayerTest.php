@@ -96,4 +96,27 @@ class TicTacToeClassicPlayerTest extends TestCase
         $winMove3 = $player->nextMoveIn($game3, CellValue::X, CellValue::O);
         $this->assertEquals('B2', $winMove3);
     }
+
+    /**
+     * Test we can play on an empty side.
+     *
+     * @return void
+     */
+    public function test_it_can_play_an_empty_side()
+    {
+        $player = resolve(Player::class);
+        $player->loadStrategies(collect([
+            resolve(Strategies\EmptySideStrategy::class),
+        ]));
+
+        $game = factory(Game::class)->create();
+        $game->newUpCells(GenerateGridCells::execute(3));
+
+        $game->play(CellValue::O, 'A2');
+        $game->play(CellValue::O, 'B3');
+        $game->play(CellValue::O, 'C2');
+
+        $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
+        $this->assertEquals('B1', $move);
+    }
 }

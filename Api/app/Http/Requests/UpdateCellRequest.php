@@ -26,7 +26,8 @@ class UpdateCellRequest extends FormRequest
     public function rules()
     {
         return [
-            'value' => ['required', Rule::in(CellValue::getValues())],
+            'value'    => ['required', Rule::in(CellValue::getValues())],
+            'opponent' => ['required', Rule::in(CellValue::getValues())],
         ];
     }
 }

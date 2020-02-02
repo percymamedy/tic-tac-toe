@@ -18,7 +18,7 @@
     export default {
         data() {
             return {
-                title: 'Welcome'
+                title: this.$t('messages.welcome')
             }
         },
 

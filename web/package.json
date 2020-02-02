@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -13,6 +13,9 @@
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "laravel-echo": "^1.6.1",
+    "lodash": "^4.17.15",
+    "socket.io-client": "^2.3.0",
     "tailwindcss": "^1.1.4",
     "vue": "^2.6.10",
     "vue-head": "^2.2.0",
@@ -42,7 +45,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

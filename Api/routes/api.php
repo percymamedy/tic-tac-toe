@@ -9,6 +9,10 @@ Route::prefix('games')->group(function () {
     Route::post('store', [Controllers\GameController::class, 'store'])
          ->name('api.games.store');
 
+    // Fetch game.
+    Route::get('{game}', [Controllers\GameController::class, 'show'])
+         ->name('api.games.show');
+
     // Reset a game.
     Route::put('{game}/reset', [Controllers\GameController::class, 'reset'])
          ->name('api.games.reset');
