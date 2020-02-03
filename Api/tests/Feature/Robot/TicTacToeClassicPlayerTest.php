@@ -142,4 +142,28 @@ class TicTacToeClassicPlayerTest extends TestCase
         $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
         $this->assertEquals('B2', $move);
     }
+
+    /**
+     * Test that we can play on an opposite corner if it's available.
+     *
+     * @return void
+     */
+    public function test_it_can_play_on_opposite_corner()
+    {
+        $player = resolve(Player::class);
+        $player->loadStrategies(collect([
+            resolve(Strategies\OppositeCornerStrategy::class),
+        ]));
+
+        $game = factory(Game::class)->create();
+        $game->newUpCells(GenerateGridCells::execute(3));
+
+        $game->play(CellValue::O, 'A1');
+        $game->play(CellValue::X, 'A3');
+        $game->play(CellValue::O, 'B3');
+        $game->play(CellValue::O, 'C2');
+
+        $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
+        $this->assertEquals('C1', $move);
+    }
 }
