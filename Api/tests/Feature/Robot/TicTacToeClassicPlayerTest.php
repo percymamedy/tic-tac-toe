@@ -119,4 +119,27 @@ class TicTacToeClassicPlayerTest extends TestCase
         $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
         $this->assertEquals('B1', $move);
     }
+
+    /**
+     * Test we can play on the center if it's available.
+     *
+     * @return void
+     */
+    public function test_it_can_play_center()
+    {
+        $player = resolve(Player::class);
+        $player->loadStrategies(collect([
+            resolve(Strategies\CenterStrategy::class),
+        ]));
+
+        $game = factory(Game::class)->create();
+        $game->newUpCells(GenerateGridCells::execute(3));
+
+        $game->play(CellValue::O, 'A2');
+        $game->play(CellValue::O, 'B3');
+        $game->play(CellValue::O, 'C2');
+
+        $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
+        $this->assertEquals('B2', $move);
+    }
 }
