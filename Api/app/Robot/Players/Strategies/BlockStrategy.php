@@ -10,12 +10,12 @@ class BlockStrategy extends BaseStrategy
      * Find the move within the given cells.
      *
      * @param Collection $cells
-     * @param string     $peice
+     * @param string     $piece
      * @param string     $opponentPiece
      *
      * @return null|string
      */
-    public function findMove(Collection $cells, string $peice, string $opponentPiece): ?string
+    public function findMove(Collection $cells, string $piece, string $opponentPiece): ?string
     {
         foreach ($this->calculateWinningCombinations() as $combination) {
             $combinationCells = $this->combinationCells($cells, $combination);
