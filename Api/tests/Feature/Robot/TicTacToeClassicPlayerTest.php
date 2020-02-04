@@ -166,4 +166,29 @@ class TicTacToeClassicPlayerTest extends TestCase
         $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
         $this->assertEquals('C1', $move);
     }
+
+    /**
+     * Test that we can play such as to create a fork when it's
+     * available.
+     *
+     * @return void
+     */
+    public function test_it_can_fork()
+    {
+        $player = resolve(Player::class);
+        $player->loadStrategies(collect([
+            resolve(Strategies\ForkStrategy::class),
+        ]));
+
+        $game = factory(Game::class)->create();
+        $game->newUpCells(GenerateGridCells::execute(3));
+
+        $game->play(CellValue::X, 'A1');
+        $game->play(CellValue::X, 'C3');
+        $game->play(CellValue::O, 'B3');
+        $game->play(CellValue::O, 'A3');
+
+        $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
+        $this->assertEquals('C1', $move);
+    }
 }
