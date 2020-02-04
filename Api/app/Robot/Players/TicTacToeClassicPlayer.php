@@ -2,6 +2,7 @@
 
 namespace App\Robot\Players;
 
+use App\Exceptions\NoMovesException;
 use App\Models\Game;
 use App\Robot\Contracts\Player;
 use Illuminate\Support\Collection;
@@ -50,7 +51,7 @@ class TicTacToeClassicPlayer implements Player
             }
         }
 
-        throw new \RuntimeException('Unable to find a possible move');
+        throw new NoMovesException('Unable to find a possible move');
     }
 
     /**

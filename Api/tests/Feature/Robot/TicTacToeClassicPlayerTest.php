@@ -191,4 +191,28 @@ class TicTacToeClassicPlayerTest extends TestCase
         $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
         $this->assertEquals('C1', $move);
     }
+
+    /**
+     * Test we can block fork of the opponent.
+     *
+     * @return void
+     */
+    public function test_it_can_block_a_fork()
+    {
+        $player = resolve(Player::class);
+        $player->loadStrategies(collect([
+            resolve(Strategies\BlockForkStrategy::class),
+        ]));
+
+        $game = factory(Game::class)->create();
+        $game->newUpCells(GenerateGridCells::execute(3));
+
+        $game->play(CellValue::O, 'B2');
+        $game->play(CellValue::O, 'C1');
+        $game->play(CellValue::X, 'B3');
+        $game->play(CellValue::X, 'C2');
+
+        $move = $player->nextMoveIn($game, CellValue::X, CellValue::O);
+        $this->assertEquals('A1', $move);
+    }
 }

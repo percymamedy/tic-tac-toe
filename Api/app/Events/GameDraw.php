@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-class GameWonByRobot extends GameEvent
+class GameDraw extends GameEvent
 {
     /**
      * The event's broadcast name.
@@ -11,6 +11,6 @@ class GameWonByRobot extends GameEvent
      */
     public function broadcastAs()
     {
-        return 'game.won_by_robot';
+        return 'game.draw';
     }
 }

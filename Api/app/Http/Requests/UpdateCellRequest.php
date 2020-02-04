@@ -30,4 +30,24 @@ class UpdateCellRequest extends FormRequest
             'opponent' => ['required', Rule::in(CellValue::getValues())],
         ];
     }
+
+    /**
+     * The current piece of the Player.
+     *
+     * @return string
+     */
+    public function playerPiece(): string
+    {
+        return $this->input('value');
+    }
+
+    /**
+     * The current piece of the Robot.
+     *
+     * @return string
+     */
+    public function robotPiece(): string
+    {
+        return $this->input('opponent');
+    }
 }

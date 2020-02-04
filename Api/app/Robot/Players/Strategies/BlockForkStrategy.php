@@ -5,7 +5,7 @@ namespace App\Robot\Players\Strategies;
 use App\Concerns\Forkable;
 use Illuminate\Support\Collection;
 
-class ForkStrategy extends BaseStrategy
+class BlockForkStrategy extends BaseStrategy
 {
     use Forkable;
 
@@ -20,6 +20,6 @@ class ForkStrategy extends BaseStrategy
      */
     public function findMove(Collection $cells, string $piece, string $opponentPiece): ?string
     {
-        return $this->findForkOn($cells, $piece);
+        return $this->findForkOn($cells, $opponentPiece);
     }
 }

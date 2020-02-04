@@ -108,6 +108,25 @@ trait Forkable
     }
 
     /**
+     * Find a possible fork from the collection of cells.
+     *
+     * @param Collection $cells
+     * @param string     $piece
+     *
+     * @return null|string
+     */
+    protected function findForkOn(Collection $cells, string $piece): ?string
+    {
+        foreach ($this->calculateForks() as $forkLocation => $conditions) {
+            if ($this->hasAnyforkConditions($cells, $piece, $conditions)) {
+                return $forkLocation;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Checks if the condition is satisfied.
      *
      * @param array      $condition
