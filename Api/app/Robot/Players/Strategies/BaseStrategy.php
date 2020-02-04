@@ -14,7 +14,6 @@ abstract class BaseStrategy implements Strategy
      * These cells combination won't lead to victory in any way for the current move.
      *
      * @param Collection $cells
-     * @param array      $combination
      *
      * @return bool
      */

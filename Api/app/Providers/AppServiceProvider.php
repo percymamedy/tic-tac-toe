@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
             $strategies = collect([
                 $app->make(\App\Robot\Players\Strategies\WinningStrategy::class),
                 $app->make(\App\Robot\Players\Strategies\BlockStrategy::class),
+                $app->make(\App\Robot\Players\Strategies\ForkStrategy::class),
                 $app->make(\App\Robot\Players\Strategies\CenterStrategy::class),
                 $app->make(\App\Robot\Players\Strategies\OppositeCornerStrategy::class),
                 $app->make(\App\Robot\Players\Strategies\EmptyCornerStrategy::class),
