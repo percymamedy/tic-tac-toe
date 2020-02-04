@@ -18,6 +18,6 @@ Route::prefix('games')->group(function () {
          ->name('api.games.reset');
 
     // Update cell value.
-    Route::put('{game}/cells/{cell}', [Controllers\GameCellController::class, 'update'])
+    Route::put('{game}/cells/{cell}', Controllers\GameCellController::class)
          ->name('api.games.cells.update');
 });
