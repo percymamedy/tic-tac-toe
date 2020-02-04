@@ -6,8 +6,16 @@ export default {
             gameplay: 'Gameplay',
             loading: 'Loading...',
             thinking: 'Thinking...',
+            waiting: 'Waiting...',
             your_turn: 'Your turn to play !',
-            reset_game: 'Reset game'
+            robot_turn: 'Robot turn to play!',
+            reset_game: 'Reset game',
+            game_draw: 'Game is draw, try again',
+            you_won: 'Huraayy...You won !',
+            you_lose: 'Whoopss...You lost !',
+            home: 'Go home',
+            page_not_found: 'The requested page was not found.',
+            game_over: 'Game over'
         }
     }
 }

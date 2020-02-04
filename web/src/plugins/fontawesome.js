@@ -10,7 +10,8 @@ import {
     faRobot,
     faTimes,
     faCircle,
-    faSync
+    faSync,
+    faHome
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -21,7 +22,8 @@ library.add(
     faRobot,
     faTimes,
     faCircle,
-    faSync
+    faSync,
+    faHome
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

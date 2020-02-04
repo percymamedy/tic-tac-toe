@@ -12,5 +12,10 @@ export default [
         path: '/games/:game',
         name: 'app.game.play',
         component: view('GameBoard.vue')
+    },
+    {
+        path: '*',
+        name: 'app.errors.404',
+        component: view('errors/404.vue')
     }
 ];
