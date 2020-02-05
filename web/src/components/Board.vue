@@ -6,13 +6,16 @@
                 <td v-for="cell in row"
                     :key="cell.id"
                     class="cursor-pointer border-solid border-black border-2 p-0 text-center"
+
                     @click="play(cell)">
                     <font-awesome-icon v-if="cell.value && cell.value === 'O'"
                                        :icon="['fas', 'circle']"
+                                       :class="[gameIsCompleted && winningLocations.includes(cell.location) ? 'text-green-500' : '' ]"
                                        size="lg"/>
 
                     <font-awesome-icon v-if="cell.value && cell.value === 'X'"
                                        :icon="['fas', 'times']"
+                                       :class="[gameIsCompleted && winningLocations.includes(cell.location) ? 'text-green-500' : '' ]"
                                        size="lg"/>
                 </td>
             </tr>
@@ -31,6 +34,13 @@
             game: {
                 type: Object,
                 required: true
+            },
+            winningLocations: {
+                type: Array,
+                required: false,
+                default() {
+                    return [];
+                }
             }
         },
 
@@ -42,6 +52,10 @@
         },
 
         computed: {
+            gameIsCompleted() {
+                return this.game && this.game.completed_at !== null;
+            },
+
             rows() {
                 return chunk(this.game.cells, 3);
             },
@@ -65,7 +79,7 @@
              * @return {Promise}
              */
             async play(cell) {
-                if (this.turn !== 'player' || cell.value !== null) {
+                if (this.gameIsCompleted || this.turn !== 'player' || cell.value !== null) {
                     return;
                 }
 
@@ -99,7 +113,19 @@
             movePiece({id, value}) {
                 setTimeout(() => {
                     this.$store.commit('UPDATE_CELL_VALUE', {id, value});
-                    this.turn = 'player'
+                    this.turn = 'player';
+                }, 100);
+            },
+
+            /**
+             * Complete the game.
+             *
+             * @param game
+             */
+            completeGame(game) {
+                setTimeout(() => {
+                    this.$store.commit('COMPLETE_THE_GAME', game);
+                    this.turn = 'player';
                 }, 100);
             }
         },
@@ -107,9 +133,10 @@
         mounted() {
             Echo
                 .channel(`games.${this.$route.params.game}`)
-                .listen('.game.move_played', (e) => {
-                    this.movePiece(e);
-                });
+                .listen('.game.move_played', (e) => this.movePiece(e))
+                .listen('.game.draw', (e) => this.completeGame(e))
+                .listen('.game.won_by_player', (e) => this.completeGame(e))
+                .listen('.game.won_by_robot', (e) => this.completeGame(e));
         }
     }
 </script>

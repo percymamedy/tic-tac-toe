@@ -110,6 +110,8 @@ If you are building for production:
 npm run build
 ```
 
+Production build is in ```web/dist```
+
 You should now be up and running
 
 ### Creator

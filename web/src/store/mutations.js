@@ -5,6 +5,8 @@ export default {
 
     CHANGE_TURN: (state, {turn}) => state.turn = turn,
 
+    COMPLETE_THE_GAME: (state, {completed_at}) => state.game.completed_at = completed_at,
+
     UPDATE_CELL: (state, {cell}) => {
         let index = findIndex(state.game.cells, {id: cell.id});
 
